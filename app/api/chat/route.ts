@@ -18,7 +18,7 @@ export async function POST(req: Request) {
     stream: true,
     messages,
     temperature: 1,
-    max_tokens: 256,
+    max_tokens: 4095,
     top_p: 1,
     frequency_penalty: 0,
     presence_penalty: 0
