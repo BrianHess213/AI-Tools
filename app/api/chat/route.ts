@@ -29,3 +29,34 @@ export async function POST(req: Request) {
   // Respond with the stream
   return new StreamingTextResponse(stream);
 }
+
+
+// openai-service.ts
+import axios from 'axios';
+
+const OPENAI_API_ENDPOINT = 'https://api.openai.com/v1/images/generations';
+const OPENAI_API_KEY = process.env.OPENAI_API_KEY; // Store your API key in an environment variable
+
+export const generateImageWithDALLE = async (prompt: string) => {
+  if (!OPENAI_API_KEY) {
+    throw new Error('OpenAI API key not found. Please set your API key in the environment variables.');
+  }
+
+  try {
+    const response = await axios.post(
+      OPENAI_API_ENDPOINT,
+      { prompt },
+      {
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${OPENAI_API_KEY}`,
+        },
+      }
+    );
+
+    return response.data;
+  } catch (error) {
+    console.error('Error generating image with DALL·E:', error);
+    throw error;
+  }
+};
